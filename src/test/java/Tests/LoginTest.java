@@ -2,7 +2,9 @@ package Tests;
 
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.ListPage;
 import pages.LoginPage;
+import pages.ProductPage;
 
 import java.net.MalformedURLException;
 
@@ -13,8 +15,10 @@ public class LoginTest  extends  BaseTest{
 
     @Test
     private void SignIn() throws Exception {
-        new HomePage(driver).login();
-        new LoginPage(driver).existingLogin("DemoAccountForTesting@gmail.com","admin12345");
+        new LoginPage(driver).existingLogin();
+        new HomePage(driver).searchItem("Hand Wash");
+        new ListPage(driver).selectItem();
+        new ProductPage(driver).buyNow();
     }
 
 }

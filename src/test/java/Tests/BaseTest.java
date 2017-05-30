@@ -23,9 +23,8 @@ public class BaseTest {
         driver = driverFactory.getDriver();
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod()
     public synchronized void teardown() {
         driver.quit();
-        appiumServer.stop();
     }
 }

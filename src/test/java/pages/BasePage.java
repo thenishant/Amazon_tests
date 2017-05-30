@@ -1,28 +1,68 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import java.util.List;
 
 class BasePage {
     private AppiumDriver driver;
     private WebDriverWait wait;
 
-    public BasePage(AppiumDriver driver) throws Exception {
+    BasePage(AppiumDriver driver) throws Exception {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, 45);
     }
 
-    void waitForElementToBeClickable(WebElement element) {
+    void waitForElementsToBeVisible(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void hideKeyBoard() {
+    void hideKeyBoard() {
         try {
             driver.hideKeyboard();
         } catch (Exception e) {
 
         }
+    }
+
+    public void waitForElementsToBeVisible(List<WebElement> elementList) {
+        wait.until(ExpectedConditions.visibilityOfAllElements(elementList));
+    }
+
+    protected boolean isElementPresent(By by) {
+        try {
+            driver.findElement(by);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public void scrollTo(String text) {
+        scrollDownTo(text);
+    }
+
+    public void scrollDownTo(String text) {
+        scrollDownTo(By.xpath("//*[@text=\"" + text + "\"]"));
+    }
+
+    public void scrollDownTo(By by) {
+        int i = 0;
+        while (i < 5) {
+            if (driver.findElements(by).size() > 0) {
+//                return;
+                int height = driver.manage().window().getSize().getHeight();
+                int width = driver.manage().window().getSize().getWidth();
+                driver.swipe(width / 2, height * 2 / 3, width / 2, height / 3, 1000);
+            }
+            i++;
+        }
+        Assert.fail("Did not find : " + by.toString());
     }
 }

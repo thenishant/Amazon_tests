@@ -31,17 +31,25 @@ public class LoginPage extends BasePage {
     @FindBy(id = "signInSubmit")
     private WebElement loginButton;
 
-    public void existingLogin(String emailID, String pass) {
-        waitForElementToBeClickable(login);
+    @FindBy(id = "in.amazon.mShop.android.shopping:id/sso_continue")
+    private WebElement continueButton;
+
+    public void existingLogin(){
+        waitForElementsToBeVisible(continueButton);
+        continueButton.click();
+    }
+
+    public void login(String emailID, String pass) {
+        waitForElementsToBeVisible(login);
         login.click();
         logger.info("Choosing Login to Existing Customer");
-        waitForElementToBeClickable(email);
+        waitForElementsToBeVisible(email);
         email.sendKeys(emailID);
         hideKeyBoard();
-        waitForElementToBeClickable(password);
+        waitForElementsToBeVisible(password);
         password.sendKeys(pass);
         hideKeyBoard();
-        waitForElementToBeClickable(loginButton);
+        waitForElementsToBeVisible(loginButton);
         loginButton.click();
     }
 }
