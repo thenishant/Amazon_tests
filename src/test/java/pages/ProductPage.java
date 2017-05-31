@@ -27,19 +27,18 @@ public class ProductPage extends BasePage {
     @FindBy(id = "buyNowCheckout")
     private WebElement buyNowButton;
 
+    @FindBy(id = "add-to-wishlist-button-submit")
+    private WebElement addToGetCartELe;
+
     private By addToWishList = By.id("add-to-wishlist-button-submit");
 
-    public void buyNow(){
+    public void buyNow() {
         waitForElementsToBeVisible(productName);
-        int height = driver.manage().window().getSize().getHeight();
-        int width = driver.manage().window().getSize().getWidth();
-//
-        driver.swipe(width / 2, height-100, width / 2, 450, 1000);
         waitForElementsToBeVisible(buyNowButton);
+        swipeToElement(buyNowButton);
         System.out.println("Clicking");
         buyNowButton.click();
     }
-
 
 
 }

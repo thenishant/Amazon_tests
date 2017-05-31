@@ -31,6 +31,17 @@ class BasePage {
         }
     }
 
+    public void swipeToElement(WebElement element) {
+        int height = driver.manage().window().getSize().getHeight();
+        int width = driver.manage().window().getSize().getWidth();
+        int y = element.getLocation().getY();
+        while (height < y) {
+            y = height/2;
+            driver.swipe(width / 2, y, width / 2, 10, 1000);
+            y = element.getLocation().getY();
+        }
+    }
+
     public void waitForElementsToBeVisible(List<WebElement> elementList) {
         wait.until(ExpectedConditions.visibilityOfAllElements(elementList));
     }
